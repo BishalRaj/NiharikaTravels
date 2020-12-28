@@ -22,9 +22,6 @@
     "passport-local": "^1.0.0",
     "sharp": "^0.26.1"
   },
-  "devDependencies": {
-    "start": "nodemon server.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
