@@ -85,7 +85,7 @@ router
           name: "admin",
           email: "admin@admin.com",
           password: "admin",
-          role: "a",
+          role: "super_admin",
           addedOn: date,
         });
         bcrypt.genSalt(10, (err, salt) =>
