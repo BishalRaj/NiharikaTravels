@@ -1,0 +1,100 @@
+<!-- Page Heading -->
+<style>
+  a {
+    text-decoration: none !important;
+    color: rgb(40, 0, 151);
+
+  }
+
+</style>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    <%= heading %>
+  </h1>
+</div>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <% if(role=="super_admin" ){ %>
+        <div class="col-lg-3 m-2">
+          <a href="/admin/user">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                <i class="fas fa-users fa-5x"></i>
+              </div>
+              <p class="card-text text-center mb-3">Users</p>
+            </div>
+          </a>
+        </div>
+        <% } %>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/location">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-5x fa-map-marker-alt"></i>
+                </div>
+                <p class="card-text text-center mb-3">Location</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/message">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-5x fa-envelope"></i>
+                </div>
+                <p class="card-text text-center mb-3">Messages</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/gallery">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-5x fa-image"></i>
+                </div>
+                <p class="card-text text-center mb-3">Gallery</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/hotel">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-hotel fa-5x"></i>
+                </div>
+                <p class="card-text text-center mb-3">Hotel</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/flight">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-plane fa-5x"></i>
+                </div>
+                <p class="card-text text-center mb-3">Flights</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-3 m-2">
+            <a href="/admin/testimonial">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex align-items-center justify-content-center m-auto">
+                  <i class="fas fa-5x fa-sticky-note"></i>
+                </div>
+                <p class="card-text text-center mb-3">Testimonials</p>
+              </div>
+            </a>
+          </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Content Row -->
+<div class="row"></div>
+<script>
+  $("#nav-admin").addClass("active");
+</script>

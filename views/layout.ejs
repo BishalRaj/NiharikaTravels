@@ -1,0 +1,63 @@
+<% if (!admin){ %>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0069b1" />
+    <title>
+      <%= title %>
+    </title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/owl/dist/assets/owl.carousel.css" />
+    <link rel="stylesheet" href="/assets/css/animation.css" />
+    <link rel="stylesheet" href="/assets/css/lightbox.css" />
+    <link rel="stylesheet" href="/assets/css/jquery-ui.css" />
+    <script src="/assets/js/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/assets/owl/dist/assets/owl.theme.default.min.css" />
+  </head>
+
+  <body class="bg-light">
+    <%- include('partials/nav'); %>
+
+      <div class="pre-loader"></div>
+      <%- body %>
+        <%- include('partials/footer'); %>
+  </body>
+  <script src="/assets/js/jquery.filterizr.min.js"></script>
+  <script src="/assets/js/jquery-ui.js"></script>
+  <script src="/assets/js/bootstrap.js"></script>
+  <script src="/assets/js/lightbox.js"></script>
+  <script src="/assets/js/fontawsome.js"></script>
+  <script src="/assets/js/animation.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/script.js"></script>
+  <!-- <script src="/assets/js/includes/cookie.js"></script> -->
+
+  <script>
+    (function ($) {
+      "use strict";
+      $(window).on("load", function () {
+        if ($(".pre-loader").length > 0) {
+          $(".pre-loader").fadeOut("slow");
+        }
+      });
+    })(jQuery);
+
+
+
+
+  </script>
+
+
+
+  </html>
+  <% } %>
+    <% if(admin){ %>
+      <%- include('adminlayout'); %>
+        <% } %>

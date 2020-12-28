@@ -1,0 +1,38 @@
+<section class="p-5 sm-p-5" style="padding-top: 100px !important;">
+  <center>
+    <div class="row p-3 m-auto" style="max-width: 540px;">
+      <div class="col-md-12 mt-5">
+        <div class="card card-body default-bg-color">
+          <h5 class="card-title">Login / Signup</h5>
+          <small>We will automatically sign you up if you haven't. <br> Please fill the form and continue. </small>
+          <%- include('partials/messages'); %>
+            <form class="card-text" action="/login" method="POST">
+              <div class="form-group">
+                <input type="text" name="email" class="form-control" placeholder="Enter your email" />
+              </div>
+              <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Enter your password" />
+              </div>
+              <button class="btn btn-success btn-block" type="submit">
+                Continue
+              </button>
+            </form>
+
+            <p class="my-3">or</p>
+
+            <div>
+              <form action="/google">
+                <button class="btn w-100 p-2 m-0  bg-light shadow" type="submit">
+                  <img src="/assets/image/google.png" alt="" class="img-fluid" style="width: 35px;" />
+                </button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </center>
+</section>
+
+<script>
+  $("#nav-login").addClass("active");
+</script>

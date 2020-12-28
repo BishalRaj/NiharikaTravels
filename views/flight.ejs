@@ -1,0 +1,188 @@
+<!-- search form -->
+
+<section class="head-hotel">
+    <%- include('partials/search-form'); %>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row my-3">
+            <!-- filter section -->
+            <div class="col-lg-3">
+                <div class="row">
+                    <form class="w-100" method="GET" action="/hotel/search">
+                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <b>Filter your Search</b>
+                        </div>
+
+                        <!-- location -->
+                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <small class="default-color"><b>Filter by company</b></small>
+                            <br />
+                            <input type="text" class="w-100 p-2 bg-light my-2" placeholder="Filter by location"
+                                id="filterLocation" name="location" style="border-radius: 0; border: solid 1px grey;" />
+                        </div>
+
+                        <!-- range -->
+                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <small class="default-color float-left"><b>Price max.</b></small>
+                            <small class="default-color float-right" id="price"></small>
+                            <input type="range" min="1" max="1000" class="form-range w-100 p-2 my-2" name="price"
+                                id="customRange" />
+                        </div>
+
+                        <!-- rating -->
+                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <small class="default-color"><b>Star Rating min.</b></small> <br />
+                            <div class="form-check py-1">
+                                <input class="form-check-input" type="radio" name="star" id="star1" value="1" />
+                                <label class="form-check-label" for="star1">
+                                    <i class="fas fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="form-check py-1">
+                                <input class="form-check-input" type="radio" name="star" id="star2" value="2" />
+                                <label class="form-check-label" for="star2">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="form-check py-1">
+                                <input class="form-check-input" type="radio" name="star" id="star3" value="3" checked />
+                                <label class="form-check-label" for="star3">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="form-check py-1">
+                                <input class="form-check-input" type="radio" name="star" id="star4" value="4" />
+                                <label class="form-check-label" for="star4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="form-check py-1">
+                                <input class="form-check-input" type="radio" name="star" id="star5" value="5" />
+                                <label class="form-check-label" for="star5">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="col-lg-12 py-2 px-0">
+                            <button class="w-100 p-2 default-bg-color" style="border-radius: 0;">
+                                Filter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- view result section -->
+            <div class="col-lg-9">
+                <div class="row pl-4">
+                    <% if(location){ %>
+                        <div class="col-lg-12 pb-2">
+                            <p class="m-0">Hotels in <b class="default-color">
+                                    <%= location %>
+                                </b>
+                            </p>
+                            <small>
+                                <b class="default-color">
+                                    <%= sum %>
+                                </b> hotels available
+                            </small>
+                        </div>
+                        <% } %>
+                            <!-- <div class="col-lg-12">
+                                <div class="row text-uppercase text-center text-secondary" style="font-size: 12px;">
+                                    <div class="col-lg-3 border p-2"><b>Rooms</b></div>
+                                    <div class="col-lg-3 border p-2"><b>Star rating</b></div>
+                                    <div class="col-lg-3 border p-2"><b>Price</b></div>
+                                    <div class="col-lg-3 border p-2"><b>Booking </b></div>
+                                </div>
+                            </div> -->
+
+                            <% if(has_data){ data.forEach(function(val){ %>
+                                <div class="col-lg-12 my-2 border bg-light" style="height: 200px;">
+
+                                    <div class="row">
+                                        <div class="col-lg-3 p-0 m-0 overflow-hidden">
+                                            <img src="/assets/image/uploads/o_<%= val.image %>" class="fixed-img w-100"
+                                                alt="Hotel name" />
+                                        </div>
+                                        <div class="col-lg-6 border-right">
+                                            <p class="p-2"><b>
+                                                    <%= val.name %>
+                                                </b></p>
+                                            <p class="p-1">
+                                                <% for(var i=1;i<=val.stars;i++){ %>
+                                                    <i class="fas fa-star"></i>
+                                                    <% } %>
+                                            </p>
+
+                                            <small class="p-2"><i class="fas fa-map-marker-alt"></i>
+                                                <%= val.location.location %>
+                                            </small>
+                                        </div>
+                                        <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                                            <div class="text-center">
+                                                <h5 class="default-color"><b>$ <%= val.price %></b></h5>
+                                                <p class="py-1"><small>Price per room</small></p>
+                                                <form>
+                                                    <button style="border-radius: 0;" class="p-2 default-bg-color">
+                                                        Select Room
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <% }) } %>
+
+                                    <!-- If no data -->
+                                    <% if(!has_data){ %>
+                                        <div class="mx-auto p-5">No hotels found. Please search other destinations.
+                                        </div>
+                                        <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#nav-flight").addClass("active");
+
+    var slider = document.getElementById("customRange");
+    var output = document.getElementById("price");
+    output.innerHTML = "$" + slider.value;
+    slider.oninput = function () {
+        output.innerHTML = "$" + this.value;
+    };
+
+    $(function () {
+        $('#filterLocation').autocomplete({
+            source: function (req, res) {
+                $.ajax({
+                    url: '/location/filter',
+                    dataType: 'jsonp',
+                    type: 'GET',
+                    data: req,
+                    success: function (data) {
+                        res(data);
+                    },
+                    error: function (err) {
+                        console.log(err.status);
+                    }
+                });
+            }, minlength: 1, select: function (event, ui) {
+                if (ui.data) {
+                    $('#filterLocation').text(ui.data.label);
+                }
+            }
+        })
+    })
+</script>

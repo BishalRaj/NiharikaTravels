@@ -1,0 +1,77 @@
+<section class="container-fluid default-bg-color">
+    <div class="container p-0">
+        <form action="/hotel/search" method="GET" class="p-3">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-12"><small>I want to go to</small></div>
+                        <div class="col-lg-12 overflow-hidden border-right"
+                            style="background-color: white; height: 40px;">
+                            <i class="fas fa-map-marker-alt text-secondary" style="width: 5%;"></i>
+                            <input type="text" class="border-0 p-2" style="width: 90%;" id="searchbox" name='location'
+                                placeholder="Montereal, Canada">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="col-lg-12"><small>Travel Date </small></div>
+                        <div class="col-lg-12 overflow-hidden border-right"
+                            style="background-color: white;  height: 40px;">
+                            <i class="far fa-calendar-alt text-secondary" style="width: 5%;"></i>
+                            <input type="date" class="border-0 p-2 m-0 color-secondary"
+                                style="width: 90%; background-color: white;" placeholder="Travel date" name='date'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="col-lg-12"><small>Travelers</small></div>
+                        <div class="col-lg-12 overflow-hidden border-right"
+                            style="background-color: white;  height: 40px;">
+                            <i class="fas fa-map-marker-alt text-secondary" style="width: 5%;"></i>
+                            <input type="number" class="border-0 p-2" style="width: 90%; " min="1"
+                                placeholder="(min 1 max 6) / room" name="people">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+                        <div class="col-lg-12" style="opacity: 0;"><small>
+                                Proceed
+                            </small></div>
+                        <div class="col-lg-12 p-0 m-0  " style="height: 40px;">
+                            <button class="w-100 h-100 p-2 m-0" style="border-radius: 0;">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Auto complete filter for searching location -->
+<script>
+    $(function () {
+        $('#searchbox').autocomplete({
+            source: function (req, res) {
+                $.ajax({
+                    url: '/location/filter',
+                    dataType: 'jsonp',
+                    type: 'GET',
+                    data: req,
+                    success: function (data) {
+                        res(data);
+                    },
+                    error: function (err) {
+                        console.log(err.status);
+                    }
+                });
+            }, minlength: 1, select: function (event, ui) {
+                if (ui.data) {
+                    $('#searchbox').text(ui.data.label);
+                }
+            }
+        })
+    })
+</script>

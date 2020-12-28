@@ -1,0 +1,101 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <%= heading %>
+        </h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-lg-6 mb-4 ">
+            <%- include('../../partials/messages'); %>
+
+                <div class="form-group">
+                    <label>Select Image</label>
+                    <label for="selected_image" class="form-control btn btn-info">Update Image</label>
+                    <input type="file" placeholder="Select Image" id="selected_image" hidden />
+                </div>
+
+                <form method="POST" action="/admin/hotel/update">
+                    <div class="form-group">
+                        <label for="name">Hotel Name</label>
+                        <input type="text" class="form-control" name="name" value="<%= data.name %>">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="image" id="imageToUpload"" hidden/>
+                    <input type=" text" class="form-control" name="oldimage" value="<%= data.image %>" hidden />
+                        <input type="text" class="form-control" name="id" value="<%= data._id %>" hidden />
+                    </div>
+                    <div class="form-group">
+                        <label for="hotelDescription">Description</label>
+                        <textarea class="form-control" id="hotelDescription" name="description"
+                            rows="4"><%= data.description %></textarea>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" value="<%= data.location.location %>" disabled>
+                        <input type="text" class="form-control" name="location" value="<%= data.location._id %>"
+                            hidden />
+                    </div> -->
+
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <select class="form-control" id="location" name="location">
+                            <% location.forEach(function(c){ %>
+                                <% if(c.location==data.location.location){%>
+                                    <option value="<%= c._id %>" selected>
+                                        <%= c.location %>
+                                    </option>
+                                    <% } %>
+
+                                        <% if(c.location!=data.location.location){%>
+                                            <option value="<%= c._id %>">
+                                                <%= c.location %>
+                                            </option>
+                                            <% } %>
+                                                <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stars">Stars</label>
+                        <input type="number" class="form-control" name="stars" value="<%= data.stars %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price per room</label>
+                        <input type="number" class="form-control" name="price" value="<%= data.price %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="room">Total Rooms</label>
+                        <input type="number" class="form-control" name="room" value="<%= data.room %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="available_room">Available Rooms</label>
+                        <input type="number" class="form-control" name="available_room"
+                            value="<%= data.available_room %>" disabled />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-block">
+                    <center class="m-t-30">
+                        <img src="/assets/image/uploads/<%= data.image %>" id="display_selected_image"
+                            style="width: 100%;" />
+                        <h4 class="card-title m-t-10">Selected Image</h4>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<script>
+    $("#nav-hotel").addClass("active");
+</script>
