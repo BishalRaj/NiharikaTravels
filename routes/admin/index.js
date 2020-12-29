@@ -849,7 +849,7 @@ router
         (err) => {}
       );
     } catch (error) {}
-    GalleryModal.deleteOne({ _id: req.body.g_id }, function (err) {
+    AirlineModal.deleteOne({ _id: req.body.g_id }, function (err) {
       if (err) return handleError(err);
       req.flash("success_msg", "Item Deleted");
       res.redirect("/admin/airline");
