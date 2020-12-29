@@ -1,0 +1,60 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <%= heading %>
+        </h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-lg-6 mb-4 ">
+            <%- include('../../partials/messages'); %>
+
+                <div class="form-group">
+                    <label>Select Image</label>
+                    <label for="selected_image" class="form-control btn btn-info">Update Logo</label>
+                    <input type="file" placeholder="Select Image" id="selected_image" hidden />
+                </div>
+
+
+                <form method="POST" action="/admin/airline/update">
+                    <div class="form-group">
+                        <label for="name">Airline</label>
+                        <input type="text" class="form-control" name="name" value="<%= data.name %>">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="image" id="imageToUpload"" hidden/>
+                    <input type=" text" class="form-control" name="oldimage" value="<%= data.image %>" hidden />
+                        <input type="text" class="form-control" name="id" value="<%= data._id %>" hidden />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-block">
+                    <center class="m-t-30 p-5">
+                        <img src="/assets/image/uploads/<%= data.image %>" id="display_selected_image"
+                            style="width: 200px;" />
+                        <h4 class="card-title m-t-10">Selected Logo</h4>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<script>
+    $("#nav-airline").addClass("active");
+</script>

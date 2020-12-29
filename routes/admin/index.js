@@ -10,6 +10,7 @@ const UserModal = require("../../modal/userModal");
 const HotelModal = require("../../modal/hotelModal");
 const TestimonialModal = require("../../modal/testimonialModal");
 const FlightModal = require("../../modal/hotelModal");
+const AirlineModal = require("../../modal/airlineModal");
 var today = new Date();
 var date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -248,6 +249,7 @@ router.get("/message", async (req, res) => {
     data: data,
   });
 });
+
 router
   .get("/gallery", async (req, res) => {
     await GalleryModal.find()
@@ -540,13 +542,13 @@ router
 router
   .get("/flight", async (req, res) => {
     let data = await HotelModal.find().populate("location");
-    res.render("admin/hotel/view", {
+    res.render("admin/flight/view", {
       name: req.user.name,
       id: req.user._id,
       role: req.user.role,
       thumbnail: req.user.thumbnail,
       title: "Niharika-Admin",
-      heading: "View hotel",
+      heading: "View Flight Route",
       admin: true,
       data: data,
     });
@@ -759,6 +761,131 @@ router
         res.redirect("/admin/location");
       });
   });
+
+// Airline
+
+router
+  .get("/airline", async (req, res) => {
+    await AirlineModal.find()
+      .then((data) => {
+        res.render("admin/airline/view", {
+          name: req.user.name,
+          id: req.user._id,
+          role: req.user.role,
+          thumbnail: req.user.thumbnail,
+          title: "Niharika-Admin",
+          heading: "View Airlines",
+          admin: true,
+          data: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        req.flash("error_msg", "Error viewing airlines.");
+        res.redirect("/admin");
+      });
+  })
+  .get("/airline/add", async (req, res) => {
+    res.render("admin/airline/add", {
+      name: req.user.name,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      id: req.user._id,
+      title: "Niharika-Admin",
+      heading: "Add Airlines",
+      admin: true,
+      selected: "",
+    });
+  })
+  .get("/airline/edit/:id", async (req, res) => {
+    AirlineModal.findById(req.params.id)
+      .then((data) => {
+        console.log(data);
+        res.render("admin/airline/edit", {
+          name: req.user.name,
+          id: req.user._id,
+          role: req.user.role,
+          thumbnail: req.user.thumbnail,
+          title: "Niharika-Admin",
+          heading: "Edit Airline detail",
+          admin: true,
+          data: data,
+        });
+      })
+      .catch();
+  })
+  .post("/airline/add", async (req, res) => {
+    var { name, image } = req.body;
+
+    await AirlineModal.find({ name: name }).then((result) => {
+      if (!result || !result.length || result.length <= 0) {
+        const data = new AirlineModal({
+          name: name,
+          image: !image ? "default.jpg" : image,
+          addedOn: addedOn,
+        });
+
+        data
+          .save()
+          .then(() => {
+            req.flash("success_msg", "Airline Registered");
+            res.redirect("/admin/airline/add");
+          })
+          .catch((err) => {
+            console.log(err);
+            req.flash("error_msg", "Error performing the task");
+            res.redirect("/admin/airline/add");
+          });
+      } else {
+        req.flash("error_msg", "Airline already registered");
+        res.redirect("/admin/airline/add");
+      }
+    });
+  })
+  .post("/airline/delete", (req, res) => {
+    try {
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/" + req.body.image_name,
+        (err) => {}
+      );
+    } catch (error) {}
+    GalleryModal.deleteOne({ _id: req.body.g_id }, function (err) {
+      if (err) return handleError(err);
+      req.flash("success_msg", "Item Deleted");
+      res.redirect("/admin/airline");
+    });
+  })
+  .post("/airline/update", (req, res) => {
+    let { id, name } = req.body;
+    let image = req.body.image ? req.body.image : req.body.oldimage;
+    if (req.body.image) {
+      try {
+        fs.unlink(
+          __dirname + "../../../public/image/uploads/" + req.body.oldimage,
+          (err) => {}
+        );
+        fs.unlink(
+          __dirname + "../../../public/image/uploads/o_" + req.body.oldimage,
+          (err) => {}
+        );
+      } catch (error) {}
+    }
+    let data = {
+      name: name,
+      image: image,
+    };
+    AirlineModal.findOneAndUpdate({ _id: id }, data)
+      .then((result) => {
+        req.flash("success_msg", "Airline Updated");
+        res.redirect("/admin/airline");
+      })
+      .catch((err) => {
+        req.flash("error_msg", "Airline Update Failed");
+        res.redirect("/admin/airline");
+      });
+  });
+
+// Airline end
 
 router
   .get("/testimonial", async (req, res) => {

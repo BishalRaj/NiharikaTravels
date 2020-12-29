@@ -4,10 +4,26 @@ const router = express.Router();
 const HotelModal = require("../modal/hotelModal");
 const LocationModal = require("../modal/locationModal");
 var ObjectId = require("mongoose").Types.ObjectId;
-
+var user_id = "",
+  name = "",
+  thumbnail = "",
+  role = "",
+  logged_in = false;
 // route for views
 router
   .get("/", async (req, res) => {
+    if (req.user) {
+      if (req.user.role === "admin" || req.user.role === "super_admin") {
+        res.redirect("/admin");
+      } else {
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
+      }
+    }
+
     var data = await HotelModal.find().populate("location");
     console.log(data);
     res.render("flight", {
@@ -17,6 +33,11 @@ router
       has_data: true,
       sum: "",
       location: "",
+      user_id: user_id,
+      name: name,
+      thumbnail: thumbnail,
+      role: role,
+      logged_in: logged_in,
     });
   })
   // .get("/filter", async (req, res) => {
