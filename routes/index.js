@@ -16,39 +16,36 @@ var time =
 // route for views
 router
   .get("/", async (req, res) => {
+    var user_id = "",
+      name = "",
+      thumbnail = "",
+      role = "",
+      logged_in = false;
     if (req.user) {
       if (req.user.role === "admin" || req.user.role === "super_admin") {
         res.redirect("/admin");
       } else {
-        let gallery = await GalleryModal.find().limit(6).populate("location");
-        let testimonial = await TestimonialModal.find().limit(6);
-        res.render("home", {
-          title: "Niharika",
-          admin: false,
-          logged_in: true,
-          gallery: gallery,
-          testimonial: testimonial,
-          user_id: req.user._id,
-          name: req.user.name,
-          thumbnail: req.user.thumbnail,
-          role: req.user.role,
-        });
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
       }
-    } else {
-      let gallery = await GalleryModal.find().limit(6).populate("location");
-      let testimonial = await TestimonialModal.find().limit(6);
-      res.render("home", {
-        title: "Niharika",
-        admin: false,
-        logged_in: false,
-        gallery: gallery,
-        testimonial: testimonial,
-        user_id: "",
-        name: "",
-        thumbnail: "",
-        role: "",
-      });
     }
+
+    let gallery = await GalleryModal.find().limit(6).populate("location");
+    let testimonial = await TestimonialModal.find().limit(6);
+    res.render("home", {
+      title: "Niharika",
+      admin: false,
+      gallery: gallery,
+      testimonial: testimonial,
+      user_id: user_id,
+      name: name,
+      thumbnail: thumbnail,
+      logged_in: logged_in,
+      role: role,
+    });
   })
   .get("/locations", async (req, res) => {
     var regex = new RegExp(req.query["term"], "i");

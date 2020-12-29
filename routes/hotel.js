@@ -4,19 +4,39 @@ const router = express.Router();
 const HotelModal = require("../modal/hotelModal");
 const LocationModal = require("../modal/locationModal");
 var ObjectId = require("mongoose").Types.ObjectId;
-
+var user_id = "",
+  name = "",
+  thumbnail = "",
+  role = "",
+  logged_in = false;
 // route for views
 router
   .get("/", async (req, res) => {
+    if (req.user) {
+      if (req.user.role === "admin" || req.user.role === "super_admin") {
+        res.redirect("/admin");
+      } else {
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
+      }
+    }
+
     var data = await HotelModal.find().populate("location");
-    console.log(data);
     res.render("hotel", {
       title: "Hotels",
       admin: false,
       data: data,
-      has_data: true,
+      has_data: data.length > 0 ? true : false,
       sum: "",
       location: "",
+      user_id: user_id,
+      name: name,
+      thumbnail: thumbnail,
+      role: role,
+      logged_in: logged_in,
     });
   })
   // .get("/filter", async (req, res) => {
@@ -62,6 +82,18 @@ router
       people / 6 > 0 && people / 6 < 1 ? 1 : people / 6
     );
 
+    if (req.user) {
+      if (req.user.role === "admin" || req.user.role === "super_admin") {
+        res.redirect("/admin");
+      } else {
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
+      }
+    }
+
     LocationModal.find({ location: location })
       .then((location_data) => {
         if (location_data && location_data.length && location_data.length > 0) {
@@ -93,6 +125,11 @@ router
                 data: val,
                 sum: val.length,
                 location: location,
+                user_id: user_id,
+                name: name,
+                thumbnail: thumbnail,
+                role: role,
+                logged_in: logged_in,
               });
             })
             .catch((err) => console.log(err));
@@ -104,6 +141,11 @@ router
             data: "",
             sum: "",
             location: "",
+            user_id: user_id,
+            name: name,
+            thumbnail: thumbnail,
+            role: role,
+            logged_in: logged_in,
           });
         }
       })

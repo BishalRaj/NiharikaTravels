@@ -19,43 +19,46 @@
       <div class="col-md-12 text-center">
         <ul id="filter-list">
           <li class="filter active" data-filter="all">ALL</li>
-          <% var count=1; %>
-            <% location.forEach(function(c){ %>
-              <li class="filter" data-filter="<%= count %>">
-                <%= c %>
-              </li>
-              <% count++; %>
-                <% }); %>
+
+          <% if(has_data){ var count=1; location.forEach(function(c){ %>
+            <li class="filter" data-filter="<%= count %>">
+              <%= c %>
+            </li>
+            <% count++; }); } %>
         </ul>
       </div>
       <div class="col-md-12 gallery-outer pb-5">
         <ul class="gallery-items overflow-hidden">
           <!-- Start -->
 
-          <% if(data=="" ){ %>
+          <% if(!has_data ){ %>
             <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
               <h1 class="text-muted">
                 No Images to show !
               </h1>
             </div>
             <% } %>
-              <% var counter=1; %>
-                <% location.forEach(function(l){ %>
-                  <% data.forEach(function(d){ %>
-                    <% if(l===d.location.location){ %>
-                      <li class="filtr-item fixed-img-div" data-category="<%= counter %>">
-                        <div class="gallery-inner">
-                          <a href="/assets/image/uploads/<%= d.image %>" data-lightbox="<%= counter %>">
-                            <img src="/assets/image/uploads/o_<%= d.image %>" class="img-cover fixed-img"
-                              alt="<%= d.title %>" />
-                          </a>
-                        </div>
-                      </li>
-                      <% } %>
-                        <% }); %>
-                          <% counter++; %>
-                            <% }); %>
-                              <!-- End -->
+
+
+              <% if(has_data){ %>
+                <% var counter=1; %>
+                  <% location.forEach(function(l){ %>
+                    <% data.forEach(function(d){ %>
+                      <% if(l===d.location.location){ %>
+                        <li class="filtr-item fixed-img-div" data-category="<%= counter %>">
+                          <div class="gallery-inner">
+                            <a href="/assets/image/uploads/<%= d.image %>" data-lightbox="<%= counter %>">
+                              <img src="/assets/image/uploads/o_<%= d.image %>" class="img-cover fixed-img"
+                                alt="<%= d.title %>" />
+                            </a>
+                          </div>
+                        </li>
+                        <% } %>
+                          <% }); %>
+                            <% counter++; %>
+                              <% }); %>
+                                <% } %>
+                                  <!-- End -->
         </ul>
       </div>
     </div>
