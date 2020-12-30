@@ -9,12 +9,12 @@
         <div class="row my-3">
             <!-- filter section -->
             <div class="col-lg-3 mx-auto">
-                <%- include('partials/messages'); %>
-                    <div class="row">
-                        <form class="w-100" method="GET" action="/flight/search">
-                            <div class="col-lg-12 border-bottom py-2 px-0">
-                                <b>Search for flights</b>
-                            </div>
+                <div class="row">
+                    <form class="w-100" method="GET" action="/flight/search">
+                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <b>Search for flights</b>
+                        </div>
+                        <%- include('./partials/messages'); %>
 
                             <!-- location -->
                             <div class="col-lg-12 border-bottom py-2 px-0">
@@ -78,24 +78,26 @@
                                     Search
                                 </button>
                             </div>
-                        </form>
-                    </div>
+                    </form>
+                </div>
             </div>
 
             <!-- view result section -->
             <% if(has_data){ %>
                 <div class="col-lg-9 mx-auto">
                     <div class="row pl-4">
-                        <% if(location){ %>
+                        <% if(departure && arrival){ %>
                             <div class="col-lg-12 pb-2">
-                                <p class="m-0">Hotels in <b class="default-color">
-                                        <%= location %>
+                                <p class="m-0">Flight from <b class="default-color">
+                                        <%= departure %>
+                                    </b> to <b class="default-color">
+                                        <%= arrival %>
                                     </b>
                                 </p>
                                 <small>
                                     <b class="default-color">
                                         <%= sum %>
-                                    </b> hotels available
+                                    </b> flights available
                                 </small>
                             </div>
                             <% } %>
@@ -109,26 +111,34 @@
                             </div> -->
 
                                 <% data.forEach(function(val){ %>
-                                    <div class="col-lg-12 my-2 border bg-light" style="height: 200px;">
+                                    <div class="col-lg-12 my-2 bg-light overflow-hidden rounded shadow">
 
                                         <div class="row">
-                                            <div class="col-lg-3 p-0 m-0 overflow-hidden">
-                                                <img src="/assets/image/uploads/o_<%= val.image %>"
-                                                    class="fixed-img w-100" alt="Hotel name" />
+                                            <div
+                                                class="col-lg-3  overflow-hidden d-flex justify-content-center align-items-center border-right">
+                                                <div class="mx-auto p-3">
+                                                    <img src="/assets/image/uploads/o_<%= val.airline.image %>"
+                                                        width="100px" alt="Airlines" />
+                                                    <p class="mt-2 text-center">
+                                                        <%= val.airline.name%>
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6 border-right">
-                                                <p class="p-2"><b>
-                                                        <%= val.name %>
+                                            <div class="col-lg-3">
+                                                <p class="p-2"><i class="fas fa-plane-departure default-color"></i><b>
+                                                        <%= val.departure %>
                                                     </b></p>
-                                                <p class="p-1">
-                                                    <% for(var i=1;i<=val.stars;i++){ %>
-                                                        <i class="fas fa-star"></i>
-                                                        <% } %>
+                                                <p>
+                                                    <%= val.departure_date %>
                                                 </p>
-
-                                                <small class="p-2"><i class="fas fa-map-marker-alt"></i>
-                                                    <%= val.location.location %>
-                                                </small>
+                                            </div>
+                                            <div class="col-lg-3 border-right">
+                                                <p class="p-2"> <i class="fas fa-plane-arrival default-color"></i><b>
+                                                        <%= val.arrival %>
+                                                    </b></p>
+                                                <p>
+                                                    <%= val.arrival_date %>
+                                                </p>
                                             </div>
                                             <div class="col-lg-3 justify-content-center align-items-center d-flex">
                                                 <div class="text-center">
@@ -136,7 +146,7 @@
                                                     <p class="py-1"><small>Price per room</small></p>
                                                     <form>
                                                         <button style="border-radius: 0;" class="p-2 default-bg-color">
-                                                            Select Room
+                                                            Book Flight
                                                         </button>
                                                     </form>
                                                 </div>

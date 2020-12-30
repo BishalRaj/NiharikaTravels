@@ -542,7 +542,6 @@ router
 router
   .get("/flight", async (req, res) => {
     let data = await FlightModal.find().populate("airline");
-    console.log(data);
     res.render("admin/flight/view", {
       name: req.user.name,
       id: req.user._id,
