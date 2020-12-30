@@ -1,0 +1,68 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <%- include('../../partials/messages'); %>
+
+
+        <% data.forEach(function(val){ %>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-center align-items-center">
+                    <div class="mr-2">
+                        <img src="<%= val.user_id.thumbnail?val.user_id.thumbnail:('/assets/image/profile.png') %>"
+                            alt="User" width="100px" style="border-radius: 50%;">
+                    </div>
+                    <div>
+                        <b>
+                            <%= val.user_id.name %>
+                        </b>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 ">
+
+                            <div class="row px-3">
+                                <div class="col-lg-2 p-0 m-0 overflow-hidden">
+                                    <img src="/assets/image/uploads/o_<%= val.hotel_id.image %>" width="150px"
+                                        alt="Hotel name" />
+                                </div>
+                                <div class="col-lg-3 border-right">
+                                    <p class="p-2"><b>
+                                            <%= val.hotel_id.name %>
+                                        </b></p>
+                                    <p class="p-1 text-warning">
+                                        <% for(var i=1;i<=val.hotel_id.stars;i++){ %>
+                                            <i class="fas fa-star"></i>
+                                            <% } %>
+                                    </p>
+
+                                    <small class="p-2"><i class="fas fa-map-marker-alt"></i>
+                                        <%= val.hotel_id.location.location %>
+                                    </small>
+                                </div>
+                                <div class="col-lg-4 border-right overflow-hidden">
+                                    <%= val.hotel_id.description %>
+                                </div>
+                                <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                                    <div class="text-center">
+                                        <h5 class="default-color"><b>$ <%= val.hotel_id.price %>
+                                            </b></h5>
+                                        <p class="py-1"><small>Price per room</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <% }); %>
+
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<script>
+    $("#nav-hotel").addClass("active");
+</script>

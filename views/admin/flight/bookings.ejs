@@ -1,0 +1,66 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <%- include('../../partials/messages'); %>
+
+
+        <% data.forEach(function(val){ %>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-center align-items-center">
+                    <div class="mr-2">
+                        <img src="<%= val.user.thumbnail?val.user.thumbnail:('/assets/image/profile.png') %>" alt="User"
+                            width="100px" style="border-radius: 50%;">
+                    </div>
+                    <div>
+                        <b>
+                            <%= val.user.name %>
+                        </b>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div
+                            class="col-lg-3  overflow-hidden d-flex justify-content-center align-items-center border-right">
+                            <div class="mx-auto p-3">
+                                <img src="/assets/image/uploads/o_<%= val.flight.airline.image %>" width="100px"
+                                    alt="Airlines" />
+                                <p class="mt-2 text-center">
+                                    <%= val.flight.airline.name%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <p class="p-2"><i class="fas fa-plane-departure default-color"></i><b>
+                                    <%= val.flight.departure %>
+                                </b></p>
+                            <p>
+                                <%= val.flight.departure_date %>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 border-right">
+                            <p class="p-2"> <i class="fas fa-plane-arrival default-color"></i><b>
+                                    <%= val.flight.arrival %>
+                                </b></p>
+                            <p>
+                                <%= val.flight.arrival_date %>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                            <div class="text-center">
+                                <h5 class="default-color"><b>$ <%= val.flight.price %></b></h5>
+                                <p class="py-1"><small>Price per seat</small></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<script>
+    $("#nav-flight").addClass("active");
+</script>

@@ -11,6 +11,8 @@ const HotelModal = require("../../modal/hotelModal");
 const TestimonialModal = require("../../modal/testimonialModal");
 const FlightModal = require("../../modal/flightModal");
 const AirlineModal = require("../../modal/airlineModal");
+const HotelReservation = require("../../modal/hotelReserveModal");
+const FlightReservation = require("../../modal/flightReserveModal");
 var today = new Date();
 var date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -423,6 +425,28 @@ router
       admin: true,
     });
   })
+  .get("/hotel/bookings", async (req, res) => {
+    let data = await HotelReservation.find().populate([
+      { path: "user_id", model: "User" },
+      {
+        path: "hotel_id",
+        populate: {
+          path: "location",
+          model: "Location",
+        },
+      },
+    ]);
+    res.render("admin/hotel/bookings", {
+      name: req.user.name,
+      id: req.user._id,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      title: "Niharika-Admin",
+      heading: "View hotel",
+      admin: true,
+      data: data,
+    });
+  })
   .get("/hotel/edit/:id", async (req, res) => {
     let location = await LocationModal.find();
     let data = await HotelModal.findById(req.params.id).populate("location");
@@ -564,6 +588,30 @@ router
       heading: "Add flight",
       admin: true,
       airline: airline,
+    });
+  })
+  .get("/flight/bookings", async (req, res) => {
+    let data = await FlightReservation.find().populate([
+      { path: "user", model: "User" },
+      {
+        path: "flight",
+        populate: {
+          path: "airline",
+          model: "Airline",
+        },
+      },
+    ]);
+
+    console.log(data);
+    res.render("admin/flight/bookings", {
+      name: req.user.name,
+      id: req.user._id,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      title: "Niharika-Admin",
+      heading: "View Flight Reservations",
+      admin: true,
+      data: data,
     });
   })
   .get("/flight/edit/:id", async (req, res) => {
