@@ -72,6 +72,33 @@ router
       res.jsonp(result);
     });
   })
+  .get("/about", async (req, res) => {
+    var user_id = "",
+      name = "",
+      thumbnail = "",
+      role = "",
+      logged_in = false;
+    if (req.user) {
+      if (req.user.role === "admin" || req.user.role === "super_admin") {
+        res.redirect("/admin");
+      } else {
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
+      }
+    }
+    res.render("about", {
+      title: "Niharika",
+      admin: false,
+      user_id: user_id,
+      name: name,
+      thumbnail: thumbnail,
+      logged_in: logged_in,
+      role: role,
+    });
+  })
   .get("/login", async (req, res) => {
     if (req.user) {
       res.redirect("/");
