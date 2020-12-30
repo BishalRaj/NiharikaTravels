@@ -81,7 +81,7 @@ router
           $lte: price ? price : 1000,
         },
       })
-        .sort({ price: -1 })
+        .sort({ price: 1 })
         .populate("airline")
         .then((val) => {
           if (val && val.length && val.length > 0) {
