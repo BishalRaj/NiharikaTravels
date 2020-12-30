@@ -1,4 +1,3 @@
-const { text } = require("body-parser");
 const mongoose = require("mongoose");
 const HotelSchema = new mongoose.Schema({
   name: {
@@ -12,19 +11,19 @@ const HotelSchema = new mongoose.Schema({
     ref: "Location",
   },
   stars: {
-    type: Number
+    type: Number,
   },
   price: {
-    type: Number
+    type: Number,
   },
   room: {
-    type: Number
+    type: Number,
   },
   description: {
-    type: String
+    type: String,
   },
   available_room: {
-    type: Number
+    type: Number,
   },
   addedOn: {
     type: String,

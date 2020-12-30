@@ -1,0 +1,98 @@
+<!-- search form -->
+
+<section class="head-hotel">
+    <%- include('partials/search-form'); %>
+</section>
+
+<section>
+    <div class="container">
+        <!-- <h3>My Hotel Bookings</h3> -->
+        <div class="row my-3 d-flex justify-content-center align-items-center">
+
+            <!-- view result section -->
+            <div class="col-lg-6">
+                <div class="row pl-4">
+
+                    <% if(has_data){ data.forEach(function(val){ %>
+                        <div class="col-lg-12 my-2 rounded bg-light shadow" style="height: 200px;">
+
+                            <div class="row">
+                                <div class="col-lg-3 p-0 m-0 overflow-hidden">
+                                    <img src="/assets/image/uploads/o_<%= val.hotel_id.image %>" class="fixed-img w-100"
+                                        alt="Hotel name" />
+                                </div>
+                                <div class="col-lg-6 border-right">
+                                    <p class="p-2"><b>
+                                            <%= val.hotel_id.name %>
+                                        </b></p>
+                                    <p class="p-1">
+                                        <% for(var i=1;i<=val.hotel_id.stars;i++){ %>
+                                            <i class="fas fa-star"></i>
+                                            <% } %>
+                                    </p>
+
+                                    <small class="p-2"><i class="fas fa-map-marker-alt"></i>
+                                        <%= val.hotel_id.location.location %>
+                                    </small>
+                                </div>
+                                <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                                    <div class="text-center">
+                                        <h5 class="default-color"><b>$ <%= val.hotel_id.price %></b></h5>
+                                        <p class="py-1"><small>Price per room</small></p>
+                                        <a href="/hotel/deal/cancel/<%= val.hotel_id._id %>">
+                                            <button style="border-radius: 0;" class="p-2 btn-danger">
+                                                Cancel Deal
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <% }) } %>
+
+                            <!-- If no data -->
+                            <% if(!has_data){ %>
+                                <div class="mx-auto p-5">No Reservations found.
+                                </div>
+                                <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#nav-hotel").addClass("active");
+
+    var slider = document.getElementById("customRange");
+    var output = document.getElementById("price");
+    output.innerHTML = "$" + slider.value;
+    slider.oninput = function () {
+        output.innerHTML = "$" + this.value;
+    };
+
+    $(function () {
+        $('#filterLocation').autocomplete({
+            source: function (req, res) {
+                $.ajax({
+                    url: '/location/filter',
+                    dataType: 'jsonp',
+                    type: 'GET',
+                    data: req,
+                    success: function (data) {
+                        res(data);
+                    },
+                    error: function (err) {
+                        console.log(err.status);
+                    }
+                });
+            }, minlength: 1, select: function (event, ui) {
+                if (ui.data) {
+                    $('#filterLocation').text(ui.data.label);
+                }
+            }
+        })
+    })
+</script>

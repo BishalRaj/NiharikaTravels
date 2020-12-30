@@ -105,7 +105,7 @@
                             <!-- <%- include('partials/hotel-list'); %> -->
 
                             <% if(has_data){ data.forEach(function(val){ %>
-                                <div class="col-lg-12 my-2 border bg-light" style="height: 200px;">
+                                <div class="col-lg-12 my-2 rounded bg-light shadow" style="height: 200px;">
 
                                     <div class="row">
                                         <div class="col-lg-3 p-0 m-0 overflow-hidden">
@@ -130,11 +130,11 @@
                                             <div class="text-center">
                                                 <h5 class="default-color"><b>$ <%= val.price %></b></h5>
                                                 <p class="py-1"><small>Price per room</small></p>
-                                                <form>
+                                                <a href="/hotel/deal/<%= val._id %>">
                                                     <button style="border-radius: 0;" class="p-2 default-bg-color">
-                                                        Select Room
+                                                        Visit Deal
                                                     </button>
-                                                </form>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

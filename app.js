@@ -36,6 +36,7 @@ const indexRoute = require("./routes/index");
 const hotelRoute = require("./routes/hotel");
 const flightRoute = require("./routes/flight");
 const galleryRoute = require("./routes/gallery");
+const bookingsRoute = require("./routes/bookings");
 const contactRoute = require("./routes/contact");
 const locationRoute = require("./routes/location");
 const adminRoute = require("./routes/admin/index");
@@ -58,6 +59,7 @@ app.use("/flight", flightRoute);
 app.use("/gallery", galleryRoute);
 app.use("/contact", contactRoute);
 app.use("/location", locationRoute);
+app.use("/bookings", bookingsRoute);
 app.use("/image", ensureAuthenticated, fileUploadRoute);
 app.use("/admin", ensureAuthenticated, adminRoute);
 
