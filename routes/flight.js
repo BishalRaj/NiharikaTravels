@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const FlightModal = require("../modal/flightModal");
 const LocationModal = require("../modal/locationModal");
+const ReserveModal = require("../modal/flightReserveModal");
 var ObjectId = require("mongoose").Types.ObjectId;
 var user_id = "",
   name = "",
@@ -121,6 +122,32 @@ router
         role: role,
         logged_in: logged_in,
       });
+    }
+  })
+  .post("/reserve", async (req, res) => {
+    if (req.user) {
+      if (req.user.role === "admin" || req.user.role === "super_admin") {
+        res.redirect("/admin");
+      } else {
+        user_id = req.user._id;
+        name = req.user.name;
+        thumbnail = req.user.thumbnail;
+        role = req.user.role;
+        logged_in = true;
+
+        let data = new ReserveModal({
+          user: user_id,
+          flight: req.body.flight,
+        });
+
+        data.save().then((reserved) => {
+          req.flash("success_msg", "Flight Booked.");
+          res.redirect("/bookings");
+        });
+      }
+    } else {
+      req.flash("error_msg", "You must Login to book Flights.");
+      res.redirect("/login");
     }
   });
 

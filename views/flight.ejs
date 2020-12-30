@@ -144,7 +144,8 @@
                                                 <div class="text-center">
                                                     <h5 class="default-color"><b>$ <%= val.price %></b></h5>
                                                     <p class="py-1"><small>Price per room</small></p>
-                                                    <form>
+                                                    <form method="POST" action="/flight/reserve">
+                                                        <input type="text" name="flight" value="<%= val._id %>">
                                                         <button style="border-radius: 0;" class="p-2 default-bg-color">
                                                             Book Flight
                                                         </button>

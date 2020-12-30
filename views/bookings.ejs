@@ -4,67 +4,161 @@
     <%- include('partials/search-form'); %>
 </section>
 
-<section>
+
+<section id="tabs">
     <div class="container">
-        <!-- <h3>My Hotel Bookings</h3> -->
-        <div class="row my-3 d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="true">My
+                            Booked Hotels</a>
+                        <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
+                            aria-controls="nav-about" aria-selected="false">My Booked Flights</a>
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
-            <!-- view result section -->
-            <div class="col-lg-6">
-                <div class="row pl-4">
+                    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                        aria-labelledby="nav-profile-tab">
+                        <%- include('partials/messages'); %>
 
-                    <% if(has_data){ data.forEach(function(val){ %>
-                        <div class="col-lg-12 my-2 rounded bg-light shadow" style="height: 200px;">
+                            <div class="container">
+                                <!-- <h3>My Hotel Bookings</h3> -->
+                                <div class="row my-3 d-flex justify-content-center align-items-center">
 
-                            <div class="row">
-                                <div class="col-lg-3 p-0 m-0 overflow-hidden">
-                                    <img src="/assets/image/uploads/o_<%= val.hotel_id.image %>" class="fixed-img w-100"
-                                        alt="Hotel name" />
-                                </div>
-                                <div class="col-lg-6 border-right">
-                                    <p class="p-2"><b>
-                                            <%= val.hotel_id.name %>
-                                        </b></p>
-                                    <p class="p-1">
-                                        <% for(var i=1;i<=val.hotel_id.stars;i++){ %>
-                                            <i class="fas fa-star"></i>
+                                    <!-- view result section -->
+                                    <div class="col-lg-12">
+
+                                        <!-- If no data -->
+                                        <% if(!has_hotel_data){ %>
+                                            <div class="p-5 text-center">No Hotel Reservations found.
+                                            </div>
                                             <% } %>
-                                    </p>
+                                                <% if(has_hotel_data){ hotelData.forEach(function(val){ %>
+                                                    <div class="col-lg-12 my-2 rounded bg-light shadow"
+                                                        style="height: 200px;">
 
-                                    <small class="p-2"><i class="fas fa-map-marker-alt"></i>
-                                        <%= val.hotel_id.location.location %>
-                                    </small>
-                                </div>
-                                <div class="col-lg-3 justify-content-center align-items-center d-flex">
-                                    <div class="text-center">
-                                        <h5 class="default-color"><b>$ <%= val.hotel_id.price %></b></h5>
-                                        <p class="py-1"><small>Price per room</small></p>
-                                        <a href="/hotel/deal/cancel/<%= val.hotel_id._id %>">
-                                            <button style="border-radius: 0;" class="p-2 btn-danger">
-                                                Cancel Deal
-                                            </button>
-                                        </a>
+                                                        <div class="row">
+                                                            <div class="col-lg-3 p-0 m-0 overflow-hidden">
+                                                                <img src="/assets/image/uploads/o_<%= val.hotel_id.image %>"
+                                                                    class="fixed-img w-100" alt="Hotel name" />
+                                                            </div>
+                                                            <div class="col-lg-2 border-right">
+                                                                <p class="p-2"><b>
+                                                                        <%= val.hotel_id.name %>
+                                                                    </b></p>
+                                                                <p class="p-1">
+                                                                    <% for(var i=1;i<=val.hotel_id.stars;i++){ %>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <% } %>
+                                                                </p>
+
+                                                                <small class="p-2"><i class="fas fa-map-marker-alt"></i>
+                                                                    <%= val.hotel_id.location.location %>
+                                                                </small>
+                                                            </div>
+                                                            <div class="col-lg-4 border-right overflow-hidden">
+                                                                <%= val.hotel_id.description %>
+                                                            </div>
+                                                            <div
+                                                                class="col-lg-3 justify-content-center align-items-center d-flex">
+                                                                <div class="text-center">
+                                                                    <h5 class="default-color"><b>$ <%=
+                                                                                val.hotel_id.price %>
+                                                                        </b></h5>
+                                                                    <p class="py-1"><small>Price per room</small>
+                                                                    </p>
+                                                                    <form method="POST" action="/bookings/cancel/hotel">
+                                                                        <input type="text" name="hotel"
+                                                                            value="<%= val._id %>" hidden />
+                                                                        <button style="border-radius: 0;"
+                                                                            class="p-2 btn-danger">
+                                                                            Cancel Hotel
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <% }) } %>
+
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <% }) } %>
-
-                            <!-- If no data -->
-                            <% if(!has_data){ %>
-                                <div class="mx-auto p-5">No Reservations found.
+                    </div>
+                    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                        <%- include('partials/messages'); %>
+                            <% if(!has_flight_data){ %>
+                                <div class="p-5 text-center">No Flight Reservations found.
                                 </div>
                                 <% } %>
+
+                                    <% if(has_flight_data){ flightData.forEach(function(val){ %>
+                                        <div class="col-lg-12 my-2 bg-light overflow-hidden rounded shadow">
+
+                                            <div class="row">
+                                                <div
+                                                    class="col-lg-3  overflow-hidden d-flex justify-content-center align-items-center border-right">
+                                                    <div class="mx-auto p-3">
+                                                        <img src="/assets/image/uploads/o_<%= val.flight.airline.image %>"
+                                                            width="100px" alt="Airlines" />
+                                                        <p class="mt-2 text-center">
+                                                            <%= val.flight.airline.name%>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <p class="p-2"><i
+                                                            class="fas fa-plane-departure default-color"></i><b>
+                                                            <%= val.flight.departure %>
+                                                        </b></p>
+                                                    <p>
+                                                        <%= val.flight.departure_date %>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-3 border-right">
+                                                    <p class="p-2"> <i
+                                                            class="fas fa-plane-arrival default-color"></i><b>
+                                                            <%= val.flight.arrival %>
+                                                        </b></p>
+                                                    <p>
+                                                        <%= val.flight.arrival_date %>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                                                    <div class="text-center">
+                                                        <h5 class="default-color"><b>$ <%= val.flight.price %></b></h5>
+                                                        <p class="py-1"><small>Price per seat</small></p>
+                                                        <form method="POST" action="/bookings/cancel/flight">
+                                                            <input type="text" name="flight" value="<%= val._id %>"
+                                                                hidden />
+                                                            <button style="border-radius: 0;" class="p-2 btn-danger">
+                                                                Cancel Flight
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <% }) }; %>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
+
+
 <script>
-    $("#nav-hotel").addClass("active");
+    $("#nav-bookings").addClass("active");
 
     var slider = document.getElementById("customRange");
     var output = document.getElementById("price");
