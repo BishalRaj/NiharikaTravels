@@ -16,14 +16,13 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Name</th>
-                                <th>Hotel Image</th>
-                                <th>Location</th>
-                                <th>Description</th>
-                                <th>Stars</th>
-                                <th>Price/room</th>
-                                <th>Total room</th>
-                                <th>Available room</th>
+                                <th>Airline</th>
+                                <th>Departure</th>
+                                <th>Departure date</th>
+                                <th>Arrival</th>
+                                <th>Arrival date</th>
+                                <th>Available seats</th>
+                                <th>Price</th>
                                 <th>Added On</th>
                                 <th>Actions</th>
                             </tr>
@@ -31,14 +30,13 @@
                         <tfoot>
                             <tr>
                                 <th>Id</th>
-                                <th>Name</th>
-                                <th>Hotel Image</th>
-                                <th>Location</th>
-                                <th>Description</th>
-                                <th>Stars</th>
-                                <th>Price/room</th>
-                                <th>Total room</th>
-                                <th>Available room</th>
+                                <th>Airline</th>
+                                <th>Departure</th>
+                                <th>Departure date</th>
+                                <th>Arrival</th>
+                                <th>Arrival date</th>
+                                <th>Available seats</th>
+                                <th>Price</th>
                                 <th>Added On</th>
                                 <th>Actions</th>
                             </tr>
@@ -52,34 +50,34 @@
                                     <%= counter %>
                                 </td>
                                 <td>
-                                    <%= d.name %>
-                                </td>
-                                <td><img src="/assets/image/uploads/o_<%= d.image %>" width="200px" alt=""></td>
-                                <td>
-                                    <%= d.location.location %>
+                                    <%= d.airline.name %><img src="/assets/image/uploads/o_<%= d.airline.image %>"
+                                            width="100px" alt=" <%= d.airline.name %>">
                                 </td>
                                 <td>
-                                    <%= d.description %>
+                                    <%= d.departure %>
                                 </td>
                                 <td>
-                                    <%= d.stars %>
+                                    <%= d.departure_date %>
+                                </td>
+                                <td>
+                                    <%= d.arrival %>
+                                </td>
+                                <td>
+                                    <%= d.arrival_date %>
+                                </td>
+                                <td>
+                                    <%= d.available_seats %>
                                 </td>
                                 <td>
                                     <%= d.price %>
-                                </td>
-                                <td>
-                                    <%= d.room %>
-                                </td>
-                                <td>
-                                    <%= d.available_room %>
                                 </td>
 
                                 <td>
                                     <%= d.addedOn %>
                                 </td>
                                 <td>
-                                    <form action="/admin/hotel/delete" method="POST">
-                                        <a href="/admin/hotel/edit/<%= d._id %>" class="btn btn-warning"><i
+                                    <form action="/admin/flight/delete" method="POST">
+                                        <a href="/admin/flight/edit/<%= d._id %>" class="btn btn-warning"><i
                                                 class="fas fa-edit"></i></a>
                                         <input type="text" name="image_name" value="<%= d.image %>" hidden />
                                         <button class="btn btn-danger" value="<%= d._id %>" name="e_id"><i

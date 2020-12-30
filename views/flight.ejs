@@ -8,31 +8,35 @@
     <div class="container">
         <div class="row my-3">
             <!-- filter section -->
-            <div class="col-lg-3">
-                <div class="row">
-                    <form class="w-100" method="GET" action="/hotel/search">
-                        <div class="col-lg-12 border-bottom py-2 px-0">
-                            <b>Filter your Search</b>
-                        </div>
+            <div class="col-lg-3 mx-auto">
+                <%- include('partials/messages'); %>
+                    <div class="row">
+                        <form class="w-100" method="GET" action="/flight/search">
+                            <div class="col-lg-12 border-bottom py-2 px-0">
+                                <b>Search for flights</b>
+                            </div>
 
-                        <!-- location -->
-                        <div class="col-lg-12 border-bottom py-2 px-0">
-                            <small class="default-color"><b>Filter by company</b></small>
-                            <br />
-                            <input type="text" class="w-100 p-2 bg-light my-2" placeholder="Filter by location"
-                                id="filterLocation" name="location" style="border-radius: 0; border: solid 1px grey;" />
-                        </div>
+                            <!-- location -->
+                            <div class="col-lg-12 border-bottom py-2 px-0">
+                                <small class="default-color"><b>Flight route</b></small>
+                                <br />
+                                <input type="text" class="w-100 p-2 bg-light my-2 filterLocation"
+                                    placeholder="Flight from" name="departure"
+                                    style="border-radius: 0; border: solid 1px grey;" />
+                                <input type="text" class="w-100 p-2 bg-light my-2 filterLocation" placeholder="To"
+                                    name="arrival" style="border-radius: 0; border: solid 1px grey;" />
+                            </div>
 
-                        <!-- range -->
-                        <div class="col-lg-12 border-bottom py-2 px-0">
-                            <small class="default-color float-left"><b>Price max.</b></small>
-                            <small class="default-color float-right" id="price"></small>
-                            <input type="range" min="1" max="1000" class="form-range w-100 p-2 my-2" name="price"
-                                id="customRange" />
-                        </div>
+                            <!-- range -->
+                            <div class="col-lg-12 border-bottom py-2 px-0">
+                                <small class="default-color float-left"><b>Price max.</b></small>
+                                <small class="default-color float-right" id="price"></small>
+                                <input type="range" min="1" max="1000" class="form-range w-100 p-2 my-2" name="price"
+                                    id="customRange" />
+                            </div>
 
-                        <!-- rating -->
-                        <div class="col-lg-12 border-bottom py-2 px-0">
+                            <!-- rating -->
+                            <!-- <div class="col-lg-12 border-bottom py-2 px-0">
                             <small class="default-color"><b>Star Rating min.</b></small> <br />
                             <div class="form-check py-1">
                                 <input class="form-check-input" type="radio" name="star" id="star1" value="1" />
@@ -66,35 +70,36 @@
                                         class="fas fa-star"></i><i class="fas fa-star"></i>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <!-- Button -->
-                        <div class="col-lg-12 py-2 px-0">
-                            <button class="w-100 p-2 default-bg-color" style="border-radius: 0;">
-                                Filter
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            <!-- Button -->
+                            <div class="col-lg-12 py-2 px-0">
+                                <button class="w-100 p-2 default-bg-color" style="border-radius: 0;">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
             </div>
 
             <!-- view result section -->
-            <div class="col-lg-9">
-                <div class="row pl-4">
-                    <% if(location){ %>
-                        <div class="col-lg-12 pb-2">
-                            <p class="m-0">Hotels in <b class="default-color">
-                                    <%= location %>
-                                </b>
-                            </p>
-                            <small>
-                                <b class="default-color">
-                                    <%= sum %>
-                                </b> hotels available
-                            </small>
-                        </div>
-                        <% } %>
-                            <!-- <div class="col-lg-12">
+            <% if(has_data){ %>
+                <div class="col-lg-9 mx-auto">
+                    <div class="row pl-4">
+                        <% if(location){ %>
+                            <div class="col-lg-12 pb-2">
+                                <p class="m-0">Hotels in <b class="default-color">
+                                        <%= location %>
+                                    </b>
+                                </p>
+                                <small>
+                                    <b class="default-color">
+                                        <%= sum %>
+                                    </b> hotels available
+                                </small>
+                            </div>
+                            <% } %>
+                                <!-- <div class="col-lg-12">
                                 <div class="row text-uppercase text-center text-secondary" style="font-size: 12px;">
                                     <div class="col-lg-3 border p-2"><b>Rooms</b></div>
                                     <div class="col-lg-3 border p-2"><b>Star rating</b></div>
@@ -103,52 +108,54 @@
                                 </div>
                             </div> -->
 
-                            <% if(has_data){ data.forEach(function(val){ %>
-                                <div class="col-lg-12 my-2 border bg-light" style="height: 200px;">
+                                <% data.forEach(function(val){ %>
+                                    <div class="col-lg-12 my-2 border bg-light" style="height: 200px;">
 
-                                    <div class="row">
-                                        <div class="col-lg-3 p-0 m-0 overflow-hidden">
-                                            <img src="/assets/image/uploads/o_<%= val.image %>" class="fixed-img w-100"
-                                                alt="Hotel name" />
-                                        </div>
-                                        <div class="col-lg-6 border-right">
-                                            <p class="p-2"><b>
-                                                    <%= val.name %>
-                                                </b></p>
-                                            <p class="p-1">
-                                                <% for(var i=1;i<=val.stars;i++){ %>
-                                                    <i class="fas fa-star"></i>
-                                                    <% } %>
-                                            </p>
+                                        <div class="row">
+                                            <div class="col-lg-3 p-0 m-0 overflow-hidden">
+                                                <img src="/assets/image/uploads/o_<%= val.image %>"
+                                                    class="fixed-img w-100" alt="Hotel name" />
+                                            </div>
+                                            <div class="col-lg-6 border-right">
+                                                <p class="p-2"><b>
+                                                        <%= val.name %>
+                                                    </b></p>
+                                                <p class="p-1">
+                                                    <% for(var i=1;i<=val.stars;i++){ %>
+                                                        <i class="fas fa-star"></i>
+                                                        <% } %>
+                                                </p>
 
-                                            <small class="p-2"><i class="fas fa-map-marker-alt"></i>
-                                                <%= val.location.location %>
-                                            </small>
-                                        </div>
-                                        <div class="col-lg-3 justify-content-center align-items-center d-flex">
-                                            <div class="text-center">
-                                                <h5 class="default-color"><b>$ <%= val.price %></b></h5>
-                                                <p class="py-1"><small>Price per room</small></p>
-                                                <form>
-                                                    <button style="border-radius: 0;" class="p-2 default-bg-color">
-                                                        Select Room
-                                                    </button>
-                                                </form>
+                                                <small class="p-2"><i class="fas fa-map-marker-alt"></i>
+                                                    <%= val.location.location %>
+                                                </small>
+                                            </div>
+                                            <div class="col-lg-3 justify-content-center align-items-center d-flex">
+                                                <div class="text-center">
+                                                    <h5 class="default-color"><b>$ <%= val.price %></b></h5>
+                                                    <p class="py-1"><small>Price per room</small></p>
+                                                    <form>
+                                                        <button style="border-radius: 0;" class="p-2 default-bg-color">
+                                                            Select Room
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
 
-                                <% }) } %>
+                                    <% }); %>
 
-                                    <!-- If no data -->
-                                    <% if(!has_data){ %>
-                                        <div class="mx-auto p-5">No hotels found. Please search other destinations.
-                                        </div>
-                                        <% } %>
+                                        <!-- If no data -->
+                                        <% if(!data){ %>
+                                            <div class="mx-auto p-5">No flights found. Please search other
+                                                destinations.
+                                            </div>
+                                            <% } %>
+                    </div>
                 </div>
-            </div>
+                <% } %>
         </div>
     </div>
 </section>
@@ -164,7 +171,7 @@
     };
 
     $(function () {
-        $('#filterLocation').autocomplete({
+        $('.filterLocation').autocomplete({
             source: function (req, res) {
                 $.ajax({
                     url: '/location/filter',

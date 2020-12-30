@@ -9,7 +9,7 @@ const MessageModal = require("../../modal/messageModal");
 const UserModal = require("../../modal/userModal");
 const HotelModal = require("../../modal/hotelModal");
 const TestimonialModal = require("../../modal/testimonialModal");
-const FlightModal = require("../../modal/hotelModal");
+const FlightModal = require("../../modal/flightModal");
 const AirlineModal = require("../../modal/airlineModal");
 var today = new Date();
 var date =
@@ -541,7 +541,8 @@ router
 
 router
   .get("/flight", async (req, res) => {
-    let data = await HotelModal.find().populate("location");
+    let data = await FlightModal.find().populate("airline");
+    console.log(data);
     res.render("admin/flight/view", {
       name: req.user.name,
       id: req.user._id,
@@ -553,7 +554,8 @@ router
       data: data,
     });
   })
-  .get("/flight/add", (req, res) => {
+  .get("/flight/add", async (req, res) => {
+    let airline = await AirlineModal.find();
     res.render("admin/flight/add", {
       name: req.user.name,
       id: req.user._id,
@@ -562,11 +564,12 @@ router
       title: "Niharika-Admin",
       heading: "Add flight",
       admin: true,
+      airline: airline,
     });
   })
   .get("/flight/edit/:id", async (req, res) => {
-    let location = await LocationModal.find();
-    let data = await FlightModal.findById(req.params.id).populate("location");
+    let airline = await AirlineModal.find();
+    let data = await FlightModal.findById(req.params.id).populate("airline");
     res.render("admin/flight/edit", {
       name: req.user.name,
       id: req.user._id,
@@ -576,62 +579,62 @@ router
       heading: "Edit flight",
       admin: true,
       data: data,
-      location: location,
+      airline: airline,
     });
   })
   .post("/flight/add", async (req, res) => {
     let {
-      name,
-      image,
-      location,
-      stars,
+      airline,
+      departure,
+      arrival,
+      departure_date,
+      arrival_date,
       price,
-      room,
-      description,
-      getLocation,
+      seats,
     } = req.body;
-    if (!name) {
+    if (!departure) {
       req.flash("error_msg", "Please fill in all fields");
       res.redirect("/admin/flight/add");
     } else {
-      image = !image ? "default.jpg" : image;
-
-      await LocationModal.find({ location: location }).then(async (result) => {
+      await LocationModal.find({ location: departure }).then(async (result) => {
         if (!result || !result.length || result.length <= 0) {
           let locationData = new LocationModal({
-            location: location,
+            location: departure,
           });
-          await locationData.save().then((data) => {
-            getLocation = data._id;
-          });
-        } else {
-          getLocation = result[0]._id;
+          await locationData.save();
         }
-
-        const data = new FlightModal({
-          name: name,
-          image: image,
-          location: getLocation,
-          stars: stars,
-          price: price,
-          room: room,
-          available_room: room,
-          description: description,
-          addedOn: addedOn,
-        });
-
-        data
-          .save()
-          .then((data) => {
-            req.flash("success_msg", "flight added");
-            res.redirect("/admin/flight/add");
-          })
-          .catch((err) => {
-            console.log(err);
-            req.flash("error_msg", "Something went wrong.");
-            res.redirect("/admin/flight/add");
-          });
       });
+      await LocationModal.find({ location: arrival }).then(async (result) => {
+        if (!result || !result.length || result.length <= 0) {
+          let locationData = new LocationModal({
+            location: arrival,
+          });
+          await locationData.save();
+        }
+      });
+
+      const data = new FlightModal({
+        airline: airline,
+        departure: departure,
+        arrival: arrival,
+        departure_date: departure_date,
+        arrival_date: arrival_date,
+        available_seats: seats,
+        price: price,
+        addedOn: addedOn,
+      });
+
+      data
+        .save()
+        .then((data) => {
+          req.flash("success_msg", "flight added");
+          res.redirect("/admin/flight/add");
+        })
+        .catch((err) => {
+          console.log(err);
+          req.flash("error_msg", "Something went wrong.");
+          res.redirect("/admin/flight/add");
+        });
     }
   })
   .post("/flight/delete", (req, res) => {
@@ -648,26 +651,16 @@ router
     });
   })
   .post("/flight/update", (req, res) => {
-    let { id, name, location, stars, price, room, description } = req.body;
-    let image = req.body.image ? req.body.image : req.body.oldimage;
-    if (req.body.image) {
-      try {
-        fs.unlink(
-          __dirname + "../../../public/image/uploads/" + req.body.oldimage,
-          (err) => {}
-        );
-      } catch (error) {}
-    }
+    let { id, airline, departure, arrival, price, seats } = req.body;
+
     let data = {
       id: id,
-      name: name,
-      image: image,
-      location: location,
-      stars: stars,
+      airline: airline,
+      departure: departure,
+      arrival: arrival,
+      available_seats: seats,
       price: price,
-      room: room,
-      available_room: room,
-      description: description,
+      addedOn: addedOn,
     };
     FlightModal.findOneAndUpdate({ _id: id }, data)
       .then((result) => {

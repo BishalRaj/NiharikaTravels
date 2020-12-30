@@ -13,51 +13,51 @@
     <div class="row">
         <div class="col-lg-8 mb-4 mx-auto">
             <%- include('../../partials/messages'); %>
-                <div class="form-group">
-                    <div class="">
-                        <div class="card-block">
-                            <center class="m-t-30">
-                                <img src="/assets/image/" id="display_selected_image"
-                                    style="width: 100%; display: none" />
-                                <!-- <h4 class="card-title m-t-10">Selected Image</h4> -->
-                            </center>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Select Image</label>
-                    <label for="selected_image" class="form-control btn btn-info">Select Image</label>
-                    <input type="file" placeholder="Select Image" id="selected_image" hidden />
-                </div>
 
-                <form method="POST" action="/admin/hotel/add">
+
+
+                <form method="POST" action="/admin/flight/add">
                     <div class="form-group">
-                        <label for="name">Hotel name</label>
-                        <input type="text" class="form-control" name="name">
+                        <label for="airline">Airline</label>
+                        <select class="form-control" id="airline" name="airline">
+
+
+                            <% var counter=1; airline.forEach(function(a){ %>
+                                <option value="<%= a._id %>" selected="<% if(counter==1){a.name} %>">
+                                    <%= a.name %>
+                                </option>
+                                <% }); %>
+                        </select>
                     </div>
 
+
                     <div class="form-group">
-                        <input type="text" class="form-control" name="image" id="imageToUpload" hidden />
+                        <label for="departure">departure</label>
+                        <input type="text" class="form-control" name="departure" id="departure">
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                        <label for="arrival">arrival</label>
+                        <input type="text" class="form-control" name="arrival" id="arrival">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departure_date">departure date</label>
+                        <input type="date" class="form-control" name="departure_date" id="departure_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="arrival_date">arrival date</label>
+                        <input type="date" class="form-control" name="arrival_date" id="arrival_date">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="seats">Total passanger seats</label>
+                        <input type="number" class="form-control" name="seats">
                     </div>
                     <div class="form-group">
-                        <label for="location">Location</label>
-                        <input type="text" class="form-control" name="location" id="location">
-                    </div>
-                    <div class="form-group">
-                        <label for="stars">Stars</label>
-                        <input type="number" class="form-control" name="stars">
-                    </div>
-                    <div class="form-group">
-                        <label for="stars">Total rooms</label>
-                        <input type="number" class="form-control" name="room">
-                    </div>
-                    <div class="form-group">
-                        <label for="stars">Price per room</label>
+                        <label for="price">Price per seat</label>
                         <input type="number" class="form-control" name="price">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
