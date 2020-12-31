@@ -862,7 +862,7 @@ router
       if (!result || !result.length || result.length <= 0) {
         const data = new AirlineModal({
           name: name,
-          image: !image ? "default.jpg" : image,
+          image: !image ? "plane.png" : image,
           addedOn: addedOn,
         });
 
