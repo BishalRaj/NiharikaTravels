@@ -342,7 +342,7 @@
     <% } %>
 
       <!-- image slider -->
-      <% if(gallery!="" ){ %>
+      <% if(insta!="" ){ %>
         <section class="py-5 gallery">
           <span class="text-secondary text-center">
             <h2 class=" text-dark title">Hassle-free Holidays</h2>
@@ -353,11 +353,11 @@
           </span>
 
           <div class="owl-carousel owl-theme mt-3 w-100  ">
-            <% gallery.forEach((g)=>{ %>
+            <% insta.forEach((g)=>{ %>
 
               <div class="card shadow-sm rounded" style="width: 18rem;">
-                <a
-                  href="https://l.facebook.com/l.php?u=https%3A%2F%2Finstagram.com%2Fglide_dine%3Figshid%3D6gyg11fnvr5a%26fbclid%3DIwAR14nVdfcZipbLyRdE3YSHfHqhDcpLLua5516sQUwvyGA28uijkuLho3mDo&h=AT1OwqtVEQlDmYGLuwXN347MSXjS8Q4c05mYThf3y_0JCdhQN3EKhHBdPBYUgZRnJ14JzJWygtftWKmPJ8f6kBjkASLiz_WMQuvnOB56ArGos-wobXvSTOs8cCryc0f-BrShlg">
+                <a target="_blank" href="<%= g.link %>">
+
                   <img class="card-img-top rounded" src="/assets/image/uploads/o_<%= g.image %>" alt="Card image cap">
                 </a>
 

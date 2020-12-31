@@ -13,6 +13,7 @@ const FlightModal = require("../../modal/flightModal");
 const AirlineModal = require("../../modal/airlineModal");
 const HotelReservation = require("../../modal/hotelReserveModal");
 const FlightReservation = require("../../modal/flightReserveModal");
+const Insta = require("../../modal/instaModal");
 var today = new Date();
 var date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -258,6 +259,7 @@ router
     await GalleryModal.find()
       .populate("location")
       .then((data) => {
+        console.log(data);
         res.render("admin/gallery/view", {
           name: req.user.name,
           id: req.user._id,
@@ -360,6 +362,10 @@ router
     try {
       fs.unlink(
         __dirname + "../../../public/image/uploads/" + req.body.image_name,
+        (err) => {}
+      );
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/o_" + req.body.image_name,
         (err) => {}
       );
     } catch (error) {}
@@ -522,6 +528,10 @@ router
     try {
       fs.unlink(
         __dirname + "../../../public/image/uploads/" + req.body.image_name,
+        (err) => {}
+      );
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/o_" + req.body.image_name,
         (err) => {}
       );
     } catch (error) {}
@@ -691,6 +701,10 @@ router
         __dirname + "../../../public/image/uploads/" + req.body.image_name,
         (err) => {}
       );
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/o_" + req.body.image_name,
+        (err) => {}
+      );
     } catch (error) {}
     FlightModal.deleteOne({ _id: req.body.e_id }, function (err) {
       if (err) return handleError(err);
@@ -718,6 +732,105 @@ router
       .catch((err) => {
         req.flash("error_msg", "flight Update Failed");
         res.redirect("/admin/flight");
+      });
+  });
+
+router
+  .get("/insta", async (req, res) => {
+    let data = await Insta.find();
+    res.render("admin/insta/view", {
+      name: req.user.name,
+      id: req.user._id,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      title: "Niharika-Admin",
+      heading: "View Instagram Post",
+      admin: true,
+      data: data,
+    });
+  })
+  .get("/insta/add", async (req, res) => {
+    res.render("admin/insta/add", {
+      name: req.user.name,
+      id: req.user._id,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      title: "Niharika-Admin",
+      heading: "Add Instagram Post",
+      admin: true,
+    });
+  })
+  .get("/insta/edit/:id", async (req, res) => {
+    let data = await Insta.findById(req.params.id);
+    res.render("admin/insta/edit", {
+      name: req.user.name,
+      id: req.user._id,
+      role: req.user.role,
+      thumbnail: req.user.thumbnail,
+      title: "Niharika-Admin",
+      heading: "Edit Instagram Post",
+      admin: true,
+      data: data,
+    });
+  })
+  .post("/insta/add", async (req, res) => {
+    let { image, link } = req.body;
+    if (!image && !link) {
+      req.flash("error_msg", "Please fill in all fields");
+      res.redirect("/admin/insta/add");
+    } else {
+      const data = new Insta({
+        link: link,
+        image: image,
+        addedOn: addedOn,
+      });
+
+      data
+        .save()
+        .then((data) => {
+          req.flash("success_msg", "Instagram Post Added");
+          res.redirect("/admin/insta/add");
+        })
+        .catch((err) => {
+          console.log(err);
+          req.flash("error_msg", "Something went wrong.");
+          res.redirect("/admin/insta/add");
+        });
+    }
+  })
+  .post("/insta/delete", (req, res) => {
+    try {
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/" + req.body.image_name,
+        (err) => {}
+      );
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/o_" + req.body.image_name,
+        (err) => {}
+      );
+    } catch (error) {}
+    Insta.deleteOne({ _id: req.body.e_id }, function (err) {
+      if (err) return handleError(err);
+      req.flash("success_msg", "Instagram Post Deleted");
+      res.redirect("/admin/insta");
+    });
+  })
+  .post("/insta/update", (req, res) => {
+    let { id, link, image } = req.body;
+
+    let data = {
+      id: id,
+      link,
+      image,
+    };
+    Insta.findOneAndUpdate({ _id: id }, data)
+      .then((result) => {
+        req.flash("success_msg", "Instagram Post Updated");
+        res.redirect("/admin/insta");
+      })
+      .catch((err) => {
+        req.flash("error_msg", "Instagram Update Failed");
+        res.redirect("/admin/insta");
       });
   });
 
@@ -772,7 +885,7 @@ router
       data
         .save()
         .then((data) => {
-          req.flash("success_msg", "Gallery location added");
+          req.flash("success_msg", "Location added");
           res.redirect("/admin/location/add");
         })
         .catch((err) => {
@@ -781,14 +894,14 @@ router
         });
     }
   })
-  .post("/location/delete", (req, res) => {
-    LocationModal.deleteOne({ _id: req.body.c_id }, function (err) {
-      if (err) return handleError(err);
+  // .post("/location/delete", (req, res) => {
+  //   LocationModal.deleteOne({ _id: req.body.c_id }, function (err) {
+  //     if (err) return handleError(err);
 
-      req.flash("success_msg", "Gallery location Deleted");
-      res.redirect("/admin/location");
-    });
-  })
+  //     req.flash("success_msg", "Location Deleted");
+  //     res.redirect("/admin/location");
+  //   });
+  // })
   .post("/location/update", (req, res) => {
     let { id, location } = req.body;
     LocationModal.findOneAndUpdate({ _id: id }, { location: location })
@@ -862,7 +975,7 @@ router
       if (!result || !result.length || result.length <= 0) {
         const data = new AirlineModal({
           name: name,
-          image: !image ? "plane.png" : image,
+          image: image,
           addedOn: addedOn,
         });
 
@@ -887,6 +1000,10 @@ router
     try {
       fs.unlink(
         __dirname + "../../../public/image/uploads/" + req.body.image_name,
+        (err) => {}
+      );
+      fs.unlink(
+        __dirname + "../../../public/image/uploads/o_" + req.body.image_name,
         (err) => {}
       );
     } catch (error) {}
@@ -981,7 +1098,7 @@ router
       data
         .save()
         .then((data) => {
-          req.flash("success_msg", "Gallery Testimonial added");
+          req.flash("success_msg", "Testimonial added");
           res.redirect("/admin/testimonial/add");
         })
         .catch((err) => {
@@ -994,7 +1111,7 @@ router
     TestimonialModal.deleteOne({ _id: req.body.id }, function (err) {
       if (err) return handleError(err);
 
-      req.flash("success_msg", "Gallery Testimonial Deleted");
+      req.flash("success_msg", "Testimonial Deleted");
       res.redirect("/admin/testimonial");
     });
   })

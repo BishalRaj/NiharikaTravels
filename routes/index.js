@@ -4,9 +4,10 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const UserModal = require("../modal/userModal");
-const GalleryModal = require("../modal/galleryModal");
+const InstaModal = require("../modal/instaModal");
 const LocationModal = require("../modal/locationModal");
 const TestimonialModal = require("../modal/testimonialModal");
+const Insta = require("../modal/instaModal");
 
 var today = new Date();
 var date =
@@ -33,12 +34,12 @@ router
       }
     }
 
-    let gallery = await GalleryModal.find().limit(6).populate("location");
+    let insta = await Insta.find().limit(6);
     let testimonial = await TestimonialModal.find().limit(6);
     res.render("home", {
       title: "Niharika",
       admin: false,
-      gallery: gallery,
+      insta: insta,
       testimonial: testimonial,
       user_id: user_id,
       name: name,

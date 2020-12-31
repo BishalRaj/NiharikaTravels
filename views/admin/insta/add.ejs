@@ -1,0 +1,57 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <%= heading %>
+        </h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-lg-8 mb-4 mx-auto">
+            <%- include('../../partials/messages'); %>
+
+
+                <div class="form-group">
+                    <div class="">
+                        <div class="card-block">
+                            <center class="m-t-30">
+                                <img src="/assets/image/" id="display_selected_image" class="mx-auto" width="200px"
+                                    style="display: none" />
+                                <!-- <h4 class="card-title m-t-10">Selected Image</h4> -->
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Insta Image</label>
+                    <label for="selected_image" class="form-control btn btn-info">Select Image</label>
+                    <input type="file" placeholder="Select Image" id="selected_image" hidden />
+                </div>
+
+                <form method="POST" action="/admin/insta/add">
+                    <div class="form-group">
+                        <label for="link">Link</label>
+                        <input type="text" class="form-control" name="link">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="image" id="imageToUpload" hidden />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </form>
+        </div>
+
+    </div>
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<script>
+    $("#nav-insta").addClass("active");
+</script>

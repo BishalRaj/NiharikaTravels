@@ -105,11 +105,21 @@
                                                 <div
                                                     class="col-lg-3  overflow-hidden d-flex justify-content-center align-items-center border-right">
                                                     <div class="mx-auto p-3">
-                                                        <img src="/assets/image/uploads/o_<%= val.flight.airline.image %>"
-                                                            width="100px" alt="Airlines" />
-                                                        <p class="mt-2 text-center">
-                                                            <%= val.flight.airline.name%>
-                                                        </p>
+
+                                                        <% if(val.flight.airline.image){ %>
+                                                            <img src="/assets/image/uploads/o_<%= val.flight.airline.image %>"
+                                                                width="100px" alt="Airlines" />
+                                                            <% } %>
+                                                                <% if(!val.flight.airline.image){ %>
+                                                                    <img src="/assets/image/plane.png" width="100px"
+                                                                        alt="Airlines" />
+                                                                    <% } %>
+
+
+
+                                                                        <p class="mt-2 text-center">
+                                                                            <%= val.flight.airline.name%>
+                                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">

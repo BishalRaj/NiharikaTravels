@@ -13,9 +13,8 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Title</th>
-                                <th>Gallery Image</th>
-                                <th>Location</th>
+                                <th>Link</th>
+                                <th>Image</th>
                                 <th>Added On</th>
                                 <th>Actions</th>
                             </tr>
@@ -23,9 +22,8 @@
                         <tfoot>
                             <tr>
                                 <th>Id</th>
-                                <th>Title</th>
-                                <th>Gallery Image</th>
-                                <th>Location</th>
+                                <th>Link</th>
+                                <th>Image</th>
                                 <th>Added On</th>
                                 <th>Actions</th>
                             </tr>
@@ -39,18 +37,18 @@
                                     <%= counter %>
                                 </td>
                                 <td>
-                                    <%= d.title %>
+                                    <a href="<%= d.link %>" target="_blank">
+                                        <%= d.link %>
+                                    </a>
                                 </td>
-                                <td><img src="/assets/image/uploads/o_<%= d.image %>" width="200px" alt=""></td>
-                                <td>
-                                    <%= d.location.location %>
-                                </td>
+                                <td><img src="/assets/image/uploads/o_<%= d.image %>" width="150px" alt=""></td>
+
                                 <td>
                                     <%= d.addedOn %>
                                 </td>
                                 <td>
-                                    <form action="/admin/gallery/delete" method="POST">
-                                        <a href="/admin/gallery/edit/<%= d._id %>" class="btn btn-warning"><i
+                                    <form action="/admin/insta/delete" method="POST">
+                                        <a href="/admin/insta/edit/<%= d._id %>" class="btn btn-warning"><i
                                                 class="fas fa-edit"></i></a>
                                         <input type="text" name="image_name" value="<%= d.image %>" hidden />
                                         <button class="btn btn-danger" value="<%= d._id %>" name="g_id">
@@ -71,5 +69,5 @@
 </div>
 <!-- End of Main Content -->
 <script>
-    $("#nav-gallery").addClass("active");
+    $("#nav-insta").addClass("active");
 </script>
