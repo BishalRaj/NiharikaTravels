@@ -344,28 +344,23 @@
       <!-- image slider -->
       <% if(gallery!="" ){ %>
         <section class="py-5 gallery">
-          <span class="text-secondary  text-center">
-            <h2 class=" text-dark title ">Hassle-free Holidays</h2>
+          <span class="text-secondary text-center">
+            <h2 class=" text-dark title">Hassle-free Holidays</h2>
 
-            <p>24x7 On-trip Assistance & Transparent Pricing on adivaha.com! Best Deals Guaranteed. Free Quote.</p>
+            <p>24x7 On-trip Assistance & Transparent Pricing on niharika.com! Best Deals Guaranteed. Free Quote.</p>
             <p>24*7 On-Trip Assistance. 5 Million Happy Customers. Special Early-Bird Offer. Great Itineraries.</p>
-            <p>Customised Itineraries. India's No.1 Travel Site. Customized Tour Packages.</p>
+            <p>Customised Itineraries. India's No.1 Travel Site.</p>
           </span>
 
-          <div class="owl-carousel owl-theme mt-3 w-100 rounded ">
+          <div class="owl-carousel owl-theme mt-3 w-100  ">
             <% gallery.forEach((g)=>{ %>
 
-              <div class="card shadow-sm" style="width: 18rem;">
-                <img class="card-img-top" src="/assets/image/uploads/o_<%= g.image %>" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title ">
-                    <%= g.title %>
-                  </h5>
-                  <p class="card-location text-secondary">
-                    <%= g.location.location %>
-                  </p>
-                  <a href="#" class="card-deal"><b>Visit deal</b></a>
-                </div>
+              <div class="card shadow-sm rounded" style="width: 18rem;">
+                <a
+                  href="https://l.facebook.com/l.php?u=https%3A%2F%2Finstagram.com%2Fglide_dine%3Figshid%3D6gyg11fnvr5a%26fbclid%3DIwAR14nVdfcZipbLyRdE3YSHfHqhDcpLLua5516sQUwvyGA28uijkuLho3mDo&h=AT1OwqtVEQlDmYGLuwXN347MSXjS8Q4c05mYThf3y_0JCdhQN3EKhHBdPBYUgZRnJ14JzJWygtftWKmPJ8f6kBjkASLiz_WMQuvnOB56ArGos-wobXvSTOs8cCryc0f-BrShlg">
+                  <img class="card-img-top rounded" src="/assets/image/uploads/o_<%= g.image %>" alt="Card image cap">
+                </a>
+
               </div>
 
               <% }); %>

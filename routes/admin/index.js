@@ -173,7 +173,8 @@ router
     if (req.user.role != "super_admin") {
       res.redirect("/admin");
     }
-    UserModal.deleteOne({ _id: req.body.n_id }, function (err) {
+
+    UserModal.deleteOne({ _id: req.body.e_id }, function (err) {
       if (err) {
         req.flash("error_msg", "Could not remove User");
         res.redirect("/admin/user");
