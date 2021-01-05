@@ -483,9 +483,10 @@ router
     if (!name) {
       req.flash("error_msg", "Please fill in all fields");
       res.redirect("/admin/hotel/add");
+    } else if (!image) {
+      req.flash("error_msg", "Image not found");
+      res.redirect("/admin/hotel/add");
     } else {
-      image = !image ? "default.jpg" : image;
-
       await LocationModal.find({ location: location }).then(async (result) => {
         if (!result || !result.length || result.length <= 0) {
           let locationData = new LocationModal({
