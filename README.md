@@ -5,6 +5,7 @@ Installation
 To install Niharika Travels, clone the repository from GitHub and run npm install to install all dependencies.
 
 bash
+
 Copy code
 git clone https://github.com/BishalRaj/NiharikaTravels.git
 cd NiharikaTravels
