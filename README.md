@@ -1,7 +1,7 @@
 # Niharika Travels
 Niharika Travels is a Node.js web application built for a Canadian travel agency. It provides an interactive platform for users to book travel packages, view destinations, and get information about travel arrangements.
 
-##Installation
+## Installation
 To install Niharika Travels, clone the repository from GitHub and run npm install to install all dependencies.
 
 ```
